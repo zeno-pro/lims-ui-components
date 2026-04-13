@@ -73,6 +73,18 @@ import {
   SampleTracker,
   EquipmentSelector,
 } from '@/components/lims'
+import {
+  AppShell,
+  PageHeader,
+  CollapsibleColumn,
+  Sidebar,
+  ListPageLayout,
+  DetailPageLayout,
+  SettingsPageLayout,
+  FormSection,
+  WizardLayout,
+  type SidebarNavGroup,
+} from '@/components/layout'
 import type { Equipment } from '@/types'
 import {
   FileText,
@@ -83,6 +95,14 @@ import {
   Settings,
   User,
   Trash2,
+  Book,
+  Search,
+  Mic,
+  Bot,
+  Shuffle,
+  Wrench,
+  Plus,
+  RefreshCw,
 } from 'lucide-react'
 
 const sampleEquipment: Equipment[] = [
@@ -98,12 +118,50 @@ const trackerEvents = [
   { status: 'pass' as const, timestamp: new Date('2024-03-18T14:00:00'), user: 'Jane Smith' },
 ]
 
+const sidebarNavigation: SidebarNavGroup[] = [
+  {
+    title: 'Collect',
+    items: [{ name: 'Sources', href: '/sources', icon: FileText }],
+  },
+  {
+    title: 'Process',
+    items: [
+      { name: 'Notebooks', href: '/notebooks', icon: Book },
+      { name: 'Ask & Search', href: '/search', icon: Search },
+    ],
+  },
+  {
+    title: 'Create',
+    items: [{ name: 'Podcasts', href: '/podcasts', icon: Mic }],
+  },
+  {
+    title: 'Manage',
+    items: [
+      { name: 'Models', href: '/settings/api-keys', icon: Bot },
+      { name: 'Transformations', href: '/transformations', icon: Shuffle },
+      { name: 'Settings', href: '/settings', icon: Settings },
+      { name: 'Advanced', href: '/advanced', icon: Wrench },
+    ],
+  },
+]
+
+const wizardSteps = [
+  { title: 'Select Type', description: 'Choose source type' },
+  { title: 'Configure', description: 'Set up processing' },
+  { title: 'Notebooks', description: 'Assign to notebooks' },
+]
+
 export function DemoPage() {
   const [dialogOpen, setDialogOpen] = React.useState(false)
   const [switchChecked, setSwitchChecked] = React.useState(false)
   const [radioValue, setRadioValue] = React.useState('opt1')
   const [checkboxChecked, setCheckboxChecked] = React.useState(false)
   const [popoverOpen, setPopoverOpen] = React.useState(false)
+  const [sidebarCollapsed, setSidebarCollapsed] = React.useState(false)
+  const [leftColumnOpen, setLeftColumnOpen] = React.useState(true)
+  const [rightColumnOpen, setRightColumnOpen] = React.useState(true)
+  const [wizardStep, setWizardStep] = React.useState(0)
+  const [listSearch, setListSearch] = React.useState('')
 
   return (
     <div className="container mx-auto py-8 space-y-12">
@@ -748,6 +806,248 @@ export function DemoPage() {
         <div className="border rounded-lg p-12">
           <LoadingState variant="full" text="Loading samples..." />
         </div>
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="text-xl font-semibold">Page Header</h2>
+        <Card>
+          <PageHeader
+            title="Page Title"
+            description="This is a description for the page."
+            actions={
+              <>
+                <Button variant="outline" size="icon"><RefreshCw className="size-4" /></Button>
+                <Button><Plus className="size-4 mr-1" /> Create New</Button>
+              </>
+            }
+          />
+        </Card>
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="text-xl font-semibold">Sidebar</h2>
+        <Card>
+          <CardContent className="p-0">
+            <div className="flex h-[300px]">
+              <Sidebar
+                navigation={sidebarNavigation}
+                collapsed={sidebarCollapsed}
+                activeHref="/notebooks"
+              />
+              <div className="flex-1 p-4 flex flex-col gap-4">
+                <p className="text-sm text-muted-foreground">Sidebar state: {sidebarCollapsed ? 'Collapsed' : 'Expanded'}</p>
+                <Button variant="outline" size="sm" onClick={() => setSidebarCollapsed(!sidebarCollapsed)}>
+                  {sidebarCollapsed ? 'Expand' : 'Collapse'} Sidebar
+                </Button>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="text-xl font-semibold">Collapsible Column</h2>
+        <Card>
+          <CardContent className="p-0">
+            <div className="flex h-[200px]">
+              <CollapsibleColumn
+                open={leftColumnOpen}
+                onOpenChange={setLeftColumnOpen}
+                side="left"
+                defaultWidth={200}
+              >
+                <div className="p-4">
+                  <p className="text-sm font-medium">Left Panel</p>
+                  <p className="text-xs text-muted-foreground">Toggle visibility with button</p>
+                </div>
+              </CollapsibleColumn>
+              <div className="flex-1 p-4">
+                <p className="text-sm">Main Content Area</p>
+              </div>
+              <CollapsibleColumn
+                open={rightColumnOpen}
+                onOpenChange={setRightColumnOpen}
+                side="right"
+                defaultWidth={200}
+              >
+                <div className="p-4">
+                  <p className="text-sm font-medium">Right Panel</p>
+                  <p className="text-xs text-muted-foreground">Toggle visibility with button</p>
+                </div>
+              </CollapsibleColumn>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="text-xl font-semibold">AppShell</h2>
+        <Card>
+          <CardContent className="p-0">
+            <div className="flex h-[300px]">
+              <AppShell
+                sidebar={
+                  <Sidebar
+                    navigation={sidebarNavigation}
+                    collapsed={sidebarCollapsed}
+                    activeHref="/notebooks"
+                  />
+                }
+              >
+                <PageHeader
+                  title="Dashboard"
+                  description="Welcome to the dashboard"
+                  actions={<Button size="sm">Settings</Button>}
+                />
+                <div className="flex-1 overflow-auto p-4">
+                  <p className="text-sm text-muted-foreground">Main content area with sidebar layout.</p>
+                </div>
+              </AppShell>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="text-xl font-semibold">List Page Layout</h2>
+        <Card>
+          <CardContent className="p-0">
+            <div className="h-[400px]">
+              <ListPageLayout
+                title="Notebooks"
+                description="Manage your notebooks"
+                searchPlaceholder="Search notebooks..."
+                searchValue={listSearch}
+                onSearchChange={setListSearch}
+                isEmpty={false}
+                onCreate={() => console.log('Create clicked')}
+                onRefresh={() => console.log('Refresh clicked')}
+              >
+                <Card className="w-[200px]">
+                  <CardHeader>
+                    <CardTitle>Notebook 1</CardTitle>
+                  </CardHeader>
+                </Card>
+                <Card className="w-[200px]">
+                  <CardHeader>
+                    <CardTitle>Notebook 2</CardTitle>
+                  </CardHeader>
+                </Card>
+                <Card className="w-[200px]">
+                  <CardHeader>
+                    <CardTitle>Notebook 3</CardTitle>
+                  </CardHeader>
+                </Card>
+              </ListPageLayout>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="text-xl font-semibold">Detail Page Layout</h2>
+        <Card>
+          <CardContent className="p-0">
+            <div className="h-[300px]">
+              <DetailPageLayout
+                title="Notebook Details"
+                headerActions={<Button size="sm">Edit</Button>}
+                leftColumn={<div className="p-4"><p className="text-sm font-medium">Chat Panel</p></div>}
+                rightColumn={<div className="p-4"><p className="text-sm font-medium">Sources Panel</p></div>}
+                leftColumnOpen={leftColumnOpen}
+                onLeftColumnOpenChange={setLeftColumnOpen}
+                rightColumnOpen={rightColumnOpen}
+                onRightColumnOpenChange={setRightColumnOpen}
+              >
+                <div className="p-4">
+                  <p className="text-sm">Main notebook content goes here.</p>
+                </div>
+              </DetailPageLayout>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="text-xl font-semibold">Settings Page Layout</h2>
+        <Card>
+          <CardContent className="p-0">
+            <div className="h-[350px] overflow-auto">
+              <SettingsPageLayout
+                title="Settings"
+                description="Configure your application settings"
+                onSave={() => console.log('Save clicked')}
+                onCancel={() => console.log('Cancel clicked')}
+              >
+                <FormSection title="API Configuration" description="Configure your API keys">
+                  <div className="space-y-4">
+                    <div className="space-y-2">
+                      <Label>API Key</Label>
+                      <Input type="password" placeholder="sk-..." />
+                    </div>
+                  </div>
+                </FormSection>
+                <FormSection title="Preferences">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <Label>Enable Notifications</Label>
+                      <p className="text-sm text-muted-foreground">Receive updates about your tests</p>
+                    </div>
+                    <Switch checked={switchChecked} onCheckedChange={setSwitchChecked} />
+                  </div>
+                </FormSection>
+              </SettingsPageLayout>
+            </div>
+          </CardContent>
+        </Card>
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="text-xl font-semibold">Wizard Layout</h2>
+        <Card>
+          <CardContent className="p-0">
+            <div className="h-[300px]">
+              <WizardLayout
+                steps={wizardSteps}
+                currentStep={wizardStep}
+                onStepChange={setWizardStep}
+                onBack={() => setWizardStep(Math.max(0, wizardStep - 1))}
+                onNext={() => setWizardStep(Math.min(wizardSteps.length - 1, wizardStep + 1))}
+                onFinish={() => console.log('Wizard finished')}
+              >
+                <div className="space-y-4">
+                  {wizardStep === 0 && (
+                    <div className="space-y-2">
+                      <Label>Select Source Type</Label>
+                      <Select>
+                        <SelectTrigger>
+                          <SelectValue placeholder="Choose a type" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="web">Web Page</SelectItem>
+                          <SelectItem value="file">File</SelectItem>
+                          <SelectItem value="api">API</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </div>
+                  )}
+                  {wizardStep === 1 && (
+                    <div className="space-y-2">
+                      <Label>Configuration</Label>
+                      <Input placeholder="Enter configuration..." />
+                    </div>
+                  )}
+                  {wizardStep === 2 && (
+                    <div className="space-y-2">
+                      <Label>Assign to Notebooks</Label>
+                      <Input placeholder="Notebook names..." />
+                    </div>
+                  )}
+                </div>
+              </WizardLayout>
+            </div>
+          </CardContent>
+        </Card>
       </section>
     </div>
   )
