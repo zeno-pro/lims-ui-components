@@ -7,6 +7,7 @@ export default defineConfig({
     index: 'src/index.ts',
     ui: 'src/components/ui/index.ts',
     lims: 'src/components/lims/index.ts',
+    layout: 'src/components/layout/index.ts',
     styles: 'src/styles/globals.css',
   },
   splitting: true,
