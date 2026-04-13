@@ -1,0 +1,17 @@
+schema: spec-driven
+context: |
+  LIMS UI Component Library for Electrical & EMC Testing Laboratories
+  Tech stack: React 18+, TypeScript, Tailwind CSS, Radix UI, OKLCH colors
+  Domain: Laboratory testing, measurement recording, compliance verification
+rules:
+  proposal:
+    - Include rollback plan
+  specs:
+    - Use Given/When/Then format
+    - Include acceptance criteria
+  design:
+    - Document component variants and states
+    - Include accessibility requirements
+  tasks:
+    - Break down into implementable items
+    - Include testing requirements

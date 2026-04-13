@@ -1,0 +1,11 @@
+name: lims-component-library
+schema: spec-driven
+status: completed
+created: 2026-04-13
+completed: 2026-04-13
+artifacts:
+  proposal: done
+  specs: done
+  design: done
+  tasks: done
+  implementation: done
