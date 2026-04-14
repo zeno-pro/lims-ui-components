@@ -127,69 +127,6 @@ import {
   ClipboardCheck,
 } from 'lucide-react'
 
-const sampleEquipment: Equipment[] = [
-  { id: 'eq-1', name: 'Spectrum Analyzer', model: 'RSA5065', serialNumber: 'SN12345', calibrationDate: new Date('2024-01-15'), nextCalibrationDate: new Date('2025-01-15'), calibrationInterval: 12, status: 'calibrated' as const },
-  { id: 'eq-2', name: 'Oscilloscope', model: 'DSO-X3034A', serialNumber: 'SN67890', calibrationDate: new Date('2023-06-20'), nextCalibrationDate: new Date('2024-06-20'), calibrationInterval: 12, status: 'calibration-due' as const },
-  { id: 'eq-3', name: 'Signal Generator', model: 'SMW200A', serialNumber: 'SN11111', calibrationDate: new Date('2024-02-10'), nextCalibrationDate: new Date('2025-02-10'), calibrationInterval: 12, status: 'maintenance' as const },
-  { id: 'eq-4', name: 'EMC Receiver', model: 'ESR3', serialNumber: 'SN22222', calibrationDate: new Date('2024-03-01'), nextCalibrationDate: new Date('2025-03-01'), calibrationInterval: 12, status: 'calibrated' as const },
-]
-
-const trackerEvents = [
-  { status: 'pending' as const, timestamp: new Date('2024-03-18T09:00:00'), user: 'John Doe' },
-  { status: 'in-progress' as const, timestamp: new Date('2024-03-18T10:30:00'), user: 'Jane Smith', note: 'Test started' },
-  { status: 'pass' as const, timestamp: new Date('2024-03-18T14:00:00'), user: 'Jane Smith' },
-]
-
-const sidebarNavigation: SidebarNavGroup[] = [
-  {
-    title: 'Samples',
-    items: [
-      { name: 'Sample Intake', href: '/samples/intake', icon: Truck },
-      { name: 'Sample List', href: '/samples', icon: Package },
-      { name: 'Sample Tracking', href: '/samples/tracking', icon: Activity },
-    ],
-  },
-  {
-    title: 'Testing',
-    items: [
-      { name: 'Test Requests', href: '/tests/requests', icon: ClipboardList },
-      { name: 'Test Results', href: '/tests/results', icon: FileCheck },
-      { name: 'Test Plans', href: '/tests/plans', icon: ClipboardCheck },
-    ],
-  },
-  {
-    title: 'Equipment',
-    items: [
-      { name: 'Equipment List', href: '/equipment', icon: Gauge },
-      { name: 'Calibration', href: '/equipment/calibration', icon: Scan },
-      { name: 'Maintenance', href: '/equipment/maintenance', icon: ShieldCheck },
-    ],
-  },
-  {
-    title: 'Reports',
-    items: [
-      { name: 'Test Reports', href: '/reports/tests', icon: FileText },
-      { name: 'Compliance', href: '/reports/compliance', icon: ShieldCheck },
-      { name: 'Statistics', href: '/reports/statistics', icon: BarChart3 },
-    ],
-  },
-  {
-    title: 'Administration',
-    items: [
-      { name: 'Calendar', href: '/calendar', icon: Calendar },
-      { name: 'Users', href: '/users', icon: Users },
-      { name: 'Settings', href: '/settings', icon: Settings },
-    ],
-  },
-]
-
-const wizardSteps = [
-  { title: 'Sample Info', description: 'Enter sample details' },
-  { title: 'Select Tests', description: 'Choose test parameters' },
-  { title: 'Assign Equipment', description: 'Select calibration equipment' },
-  { title: 'Review & Submit', description: 'Confirm test request' },
-]
-
 export function DemoPage() {
   const { t } = useI18n()
   const [dialogOpen, setDialogOpen] = React.useState(false)
@@ -202,6 +139,69 @@ export function DemoPage() {
   const [rightColumnOpen, setRightColumnOpen] = React.useState(true)
   const [wizardStep, setWizardStep] = React.useState(0)
   const [listSearch, setListSearch] = React.useState('')
+
+  const sampleEquipment: Equipment[] = [
+    { id: 'eq-1', name: t.demo.spectrumAnalyzer, model: t.demo.rSA5065, serialNumber: 'SN12345', calibrationDate: new Date('2024-01-15'), nextCalibrationDate: new Date('2025-01-15'), calibrationInterval: 12, status: 'calibrated' as const },
+    { id: 'eq-2', name: t.demo.oscilloscope, model: t.demo.dSOX3034A, serialNumber: 'SN67890', calibrationDate: new Date('2023-06-20'), nextCalibrationDate: new Date('2024-06-20'), calibrationInterval: 12, status: 'calibration-due' as const },
+    { id: 'eq-3', name: t.demo.signalGenerator, model: t.demo.sMW200A, serialNumber: 'SN11111', calibrationDate: new Date('2024-02-10'), nextCalibrationDate: new Date('2025-02-10'), calibrationInterval: 12, status: 'maintenance' as const },
+    { id: 'eq-4', name: t.demo.emcReceiver, model: t.demo.eSR3, serialNumber: 'SN22222', calibrationDate: new Date('2024-03-01'), nextCalibrationDate: new Date('2025-03-01'), calibrationInterval: 12, status: 'calibrated' as const },
+  ]
+
+  const trackerEvents = [
+    { status: 'pending' as const, timestamp: new Date('2024-03-18T09:00:00'), user: 'John Doe' },
+    { status: 'in-progress' as const, timestamp: new Date('2024-03-18T10:30:00'), user: 'Jane Smith', note: 'Test started' },
+    { status: 'pass' as const, timestamp: new Date('2024-03-18T14:00:00'), user: 'Jane Smith' },
+  ]
+
+  const sidebarNavigation: SidebarNavGroup[] = [
+    {
+      title: t.demo.navSamples,
+      items: [
+        { name: t.demo.navSampleIntake, href: '/samples/intake', icon: Truck },
+        { name: t.demo.navSampleList, href: '/samples', icon: Package },
+        { name: t.demo.navSampleTracking, href: '/samples/tracking', icon: Activity },
+      ],
+    },
+    {
+      title: t.demo.navTesting,
+      items: [
+        { name: t.demo.navTestRequests, href: '/tests/requests', icon: ClipboardList },
+        { name: t.demo.navTestResults, href: '/tests/results', icon: FileCheck },
+        { name: t.demo.navTestPlans, href: '/tests/plans', icon: ClipboardCheck },
+      ],
+    },
+    {
+      title: t.demo.navEquipment,
+      items: [
+        { name: t.demo.navEquipmentList, href: '/equipment', icon: Gauge },
+        { name: t.demo.navCalibration, href: '/equipment/calibration', icon: Scan },
+        { name: t.demo.navMaintenance, href: '/equipment/maintenance', icon: ShieldCheck },
+      ],
+    },
+    {
+      title: t.demo.navReports,
+      items: [
+        { name: t.demo.navTestReports, href: '/reports/tests', icon: FileText },
+        { name: t.demo.navCompliance, href: '/reports/compliance', icon: ShieldCheck },
+        { name: t.demo.navStatistics, href: '/reports/statistics', icon: BarChart3 },
+      ],
+    },
+    {
+      title: t.demo.navAdministration,
+      items: [
+        { name: t.demo.navCalendar, href: '/calendar', icon: Calendar },
+        { name: t.demo.navUsers, href: '/users', icon: Users },
+        { name: t.demo.navSettings, href: '/settings', icon: Settings },
+      ],
+    },
+  ]
+
+  const wizardSteps = [
+    { title: t.demo.wizardSampleInfo, description: t.demo.enterSampleDetails },
+    { title: t.demo.wizardSelectTests, description: t.demo.chooseTestParameters },
+    { title: t.demo.wizardAssignEquipment, description: t.demo.selectCalibrationEquipment },
+    { title: t.demo.wizardReviewSubmit, description: t.demo.confirmTestRequest },
+  ]
 
   const translatedWizardSteps = [
     { title: t.demo.enterSampleDetails, description: t.demo.chooseTestParameters },
@@ -475,7 +475,7 @@ export function DemoPage() {
             <AccordionTrigger>{t.demo.conductedEmissionsTest}</AccordionTrigger>
             <AccordionContent>
               <p className="text-sm text-muted-foreground">
-                This test measures electromagnetic disturbances conducted along power lines...
+                {t.demo.conductedEmissionsDescription}
               </p>
             </AccordionContent>
           </AccordionItem>
@@ -483,7 +483,7 @@ export function DemoPage() {
             <AccordionTrigger>{t.demo.radiatedEmissionsTest}</AccordionTrigger>
             <AccordionContent>
               <p className="text-sm text-muted-foreground">
-                This test measures electromagnetic emissions radiated through space...
+                {t.demo.radiatedEmissionsDescription}
               </p>
             </AccordionContent>
           </AccordionItem>
@@ -491,7 +491,7 @@ export function DemoPage() {
             <AccordionTrigger>{t.demo.esdTest}</AccordionTrigger>
             <AccordionContent>
               <p className="text-sm text-muted-foreground">
-                This test evaluates the immunity of devices to electrostatic discharge...
+                {t.demo.esdDescription}
               </p>
             </AccordionContent>
           </AccordionItem>
@@ -582,19 +582,19 @@ export function DemoPage() {
             <TableBody>
               <TableRow>
                 <TableCell className="font-mono">SAM-2024-001</TableCell>
-                <TableCell>Industrial Power Supply</TableCell>
+                <TableCell>{t.demo.industrialPowerSupply}</TableCell>
                 <TableCell><StatusBadge status="pass" size="sm" /></TableCell>
                 <TableCell className="text-success">{t.demo.pass}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-mono">SAM-2024-002</TableCell>
-                <TableCell>Medical Device Controller</TableCell>
+                <TableCell>{t.demo.medicalDeviceController}</TableCell>
                 <TableCell><StatusBadge status="pending" size="sm" /></TableCell>
                 <TableCell className="text-info">{t.demo.pending}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-mono">SAM-2024-003</TableCell>
-                <TableCell>Automotive ECU Module</TableCell>
+                <TableCell>{t.demo.automotiveECUModule}</TableCell>
                 <TableCell><StatusBadge status="fail" size="sm" /></TableCell>
                 <TableCell className="text-destructive">{t.demo.fail}</TableCell>
               </TableRow>
@@ -742,24 +742,24 @@ export function DemoPage() {
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           <SampleCard
             sampleId="SAM-2024-001"
-            productName="Industrial Power Supply"
-            customerName="Acme Corp"
+            productName={t.demo.industrialPowerSupply}
+            customerName={t.demo.acmeCorp}
             status="in-progress"
             testProgress={{ completed: 3, total: 8 }}
             receivedAt={new Date('2024-03-15')}
           />
           <SampleCard
             sampleId="SAM-2024-002"
-            productName="Medical Device Controller"
-            customerName="HealthTech Inc"
+            productName={t.demo.medicalDeviceController}
+            customerName={t.demo.healthTechInc}
             status="completed"
             testProgress={{ completed: 8, total: 8 }}
             receivedAt={new Date('2024-03-10')}
           />
           <SampleCard
             sampleId="SAM-2024-003"
-            productName="Automotive ECU Module"
-            customerName="AutoParts Ltd"
+            productName={t.demo.automotiveECUModule}
+            customerName={t.demo.autoPartsLtd}
             status="received"
             testProgress={{ completed: 0, total: 12 }}
             receivedAt={new Date('2024-03-18')}
@@ -771,27 +771,27 @@ export function DemoPage() {
         <h2 className="text-xl font-semibold">{t.demo.testResultCards}</h2>
         <div className="grid gap-4 md:grid-cols-2">
           <TestResultCard
-            testName="Conducted Emissions"
-            testMethod="CISPR 32"
+            testName={t.demo.conductedEmissions}
+            testMethod={t.demo.cispr32}
             status="pass"
             completedAt={new Date('2024-03-18T14:00:00')}
             completedBy="Jane Smith"
             measurements={[
-              { label: 'Peak', value: 23.5, unit: 'dBμV', result: 'pass' },
-              { label: 'Avg', value: 18.2, unit: 'dBμV', result: 'pass' },
-              { label: 'QP', value: 25.1, unit: 'dBμV', result: 'pass' },
+              { label: t.demo.peak, value: 23.5, unit: 'dBμV', result: 'pass' },
+              { label: t.demo.avg, value: 18.2, unit: 'dBμV', result: 'pass' },
+              { label: t.demo.qp, value: 25.1, unit: 'dBμV', result: 'pass' },
             ]}
           />
           <TestResultCard
-            testName="Radiated Emissions"
-            testMethod="CISPR 32"
+            testName={t.demo.radiatedEmissions}
+            testMethod={t.demo.cispr32}
             status="fail"
             completedAt={new Date('2024-03-18T16:00:00')}
             completedBy="John Doe"
             measurements={[
-              { label: 'Peak', value: 55.3, unit: 'dBμV/m', result: 'fail' },
-              { label: 'Avg', value: 42.1, unit: 'dBμV/m', result: 'pass' },
-              { label: 'QP', value: 48.7, unit: 'dBμV/m', result: 'fail' },
+              { label: t.demo.peak, value: 55.3, unit: 'dBμV/m', result: 'fail' },
+              { label: t.demo.avg, value: 42.1, unit: 'dBμV/m', result: 'pass' },
+              { label: t.demo.qp, value: 48.7, unit: 'dBμV/m', result: 'fail' },
             ]}
           />
         </div>
@@ -1194,12 +1194,12 @@ export function DemoPage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Notion Style Components</h2>
+        <h2 className="text-xl font-semibold">{t.demo.notionStyleComponents}</h2>
         <div className="notion space-y-8">
 
           {/* Navigation */}
           <div>
-            <p className="text-sm text-muted-foreground mb-2">Navigation</p>
+            <p className="text-sm text-muted-foreground mb-2">{t.demo.notionNavigation}</p>
             <NotionNavigation
               logo={<div className="w-8 h-8 bg-[#0075de] rounded" />}
               links={[
@@ -1214,73 +1214,73 @@ export function DemoPage() {
 
           {/* Buttons */}
           <div className="space-y-2">
-            <p className="text-sm text-muted-foreground">Buttons</p>
+            <p className="text-sm text-muted-foreground">{t.demo.notionButtons}</p>
             <div className="flex flex-wrap gap-4">
-              <NotionButton variant="primary">Primary</NotionButton>
-              <NotionButton variant="secondary">Secondary</NotionButton>
-              <NotionButton variant="ghost">Ghost</NotionButton>
-              <NotionButton variant="pill">Pill Badge</NotionButton>
-              <NotionButton variant="outline">Outline</NotionButton>
+              <NotionButton variant="primary">{t.demo.notionPrimary}</NotionButton>
+              <NotionButton variant="secondary">{t.demo.notionSecondary}</NotionButton>
+              <NotionButton variant="ghost">{t.demo.notionGhost}</NotionButton>
+              <NotionButton variant="pill">{t.demo.notionPillBadge}</NotionButton>
+              <NotionButton variant="outline">{t.demo.notionOutline}</NotionButton>
             </div>
             <div className="flex flex-wrap gap-4 mt-2">
-              <NotionButton variant="primary" size="sm">Small</NotionButton>
-              <NotionButton variant="primary" size="default">Default</NotionButton>
-              <NotionButton variant="primary" size="lg">Large</NotionButton>
-              <NotionButton variant="primary" isLoading>Loading</NotionButton>
-              <NotionButton variant="primary" disabled>Disabled</NotionButton>
+              <NotionButton variant="primary" size="sm">{t.demo.notionSmall}</NotionButton>
+              <NotionButton variant="primary" size="default">{t.demo.notionDefault}</NotionButton>
+              <NotionButton variant="primary" size="lg">{t.demo.notionLarge}</NotionButton>
+              <NotionButton variant="primary" isLoading>{t.demo.loading}</NotionButton>
+              <NotionButton variant="primary" disabled>{t.demo.disabled}</NotionButton>
             </div>
           </div>
 
           {/* Badges */}
           <div className="space-y-2">
-            <p className="text-sm text-muted-foreground">Badges</p>
+            <p className="text-sm text-muted-foreground">{t.demo.notionBadges}</p>
             <div className="flex flex-wrap gap-4">
-              <NotionBadge variant="default">Default</NotionBadge>
-              <NotionBadge variant="success">Success</NotionBadge>
-              <NotionBadge variant="warning">Warning</NotionBadge>
-              <NotionBadge variant="destructive">Destructive</NotionBadge>
-              <NotionBadge variant="outline">Outline</NotionBadge>
+              <NotionBadge variant="default">{t.demo.notionDefaultBadge}</NotionBadge>
+              <NotionBadge variant="success">{t.demo.notionSuccessBadge}</NotionBadge>
+              <NotionBadge variant="warning">{t.demo.notionWarningBadge}</NotionBadge>
+              <NotionBadge variant="destructive">{t.demo.notionDestructiveBadge}</NotionBadge>
+              <NotionBadge variant="outline">{t.demo.notionOutlineBadge}</NotionBadge>
             </div>
           </div>
 
           {/* Input */}
           <div className="space-y-2">
-            <p className="text-sm text-muted-foreground">Input</p>
+            <p className="text-sm text-muted-foreground">{t.demo.notionInput}</p>
             <div className="max-w-md">
-              <NotionInput placeholder="Enter your email..." />
+              <NotionInput placeholder={t.demo.notionEnterEmail} />
             </div>
           </div>
 
           {/* Cards */}
           <div className="space-y-2">
-            <p className="text-sm text-muted-foreground">Cards</p>
+            <p className="text-sm text-muted-foreground">{t.demo.notionCards}</p>
             <div className="grid gap-4 md:grid-cols-3">
               <NotionCard>
                 <NotionCardHeader>
-                  <NotionCardTitle>Sample Card</NotionCardTitle>
+                  <NotionCardTitle>{t.demo.notionSampleCard}</NotionCardTitle>
                   <NotionCardDescription>
                     This is a Notion-style card with warm white background and whisper border.
                   </NotionCardDescription>
                 </NotionCardHeader>
                 <NotionCardContent>
                   <p className="text-sm text-[var(--notion-warm-gray-500)]">
-                    Card content goes here with proper typography.
+                    {t.demo.notionCardContent}
                   </p>
                 </NotionCardContent>
               </NotionCard>
               <NotionCard variant="warm">
                 <NotionCardHeader>
-                  <NotionCardTitle>Warm Card</NotionCardTitle>
+                  <NotionCardTitle>{t.demo.notionWarmCard}</NotionCardTitle>
                   <NotionCardDescription>
-                    This card uses the warm white (#f6f5f4) background.
+                    {t.demo.notionWarmCardDescription}
                   </NotionCardDescription>
                 </NotionCardHeader>
               </NotionCard>
               <NotionCard interactive>
                 <NotionCardHeader>
-                  <NotionCardTitle>Interactive Card</NotionCardTitle>
+                  <NotionCardTitle>{t.demo.notionInteractiveCard}</NotionCardTitle>
                   <NotionCardDescription>
-                    Hover to see the shadow and lift effect.
+                    {t.demo.notionInteractiveCardDescription}
                   </NotionCardDescription>
                 </NotionCardHeader>
               </NotionCard>
@@ -1289,47 +1289,47 @@ export function DemoPage() {
 
           {/* Feature Cards */}
           <div className="space-y-2">
-            <p className="text-sm text-muted-foreground">Feature Cards</p>
+            <p className="text-sm text-muted-foreground">{t.demo.notionFeatureCards}</p>
             <div className="grid gap-4 md:grid-cols-3">
               <NotionFeatureCard
-                title="Wikis"
-                description="Centralize your knowledge. Every piece of information your team needs, organized and accessible."
+                title={t.demo.notionWikis}
+                description={t.demo.notionWikisDescription}
               />
               <NotionFeatureCard
-                title="Projects"
-                description="Manage any type of work. From simple checklists to complex product launches."
+                title={t.demo.notionProjects}
+                description={t.demo.notionProjectsDescription}
                 variant="warm"
               />
               <NotionFeatureCard
-                title="Docs"
-                description="Write beautiful docs. Rich text, embeds, and real-time collaboration."
+                title={t.demo.notionDocs}
+                description={t.demo.notionDocsDescription}
               />
             </div>
           </div>
 
           {/* Metric Cards */}
           <div className="space-y-2">
-            <p className="text-sm text-muted-foreground">Metric Cards</p>
+            <p className="text-sm text-muted-foreground">{t.demo.notionMetricCards}</p>
             <div className="grid gap-4 md:grid-cols-4">
               <NotionMetricCard
                 value="$4,200"
-                label="Average ROI"
-                description="within first 3 months"
+                label={t.demo.notionAverageROI}
+                description={t.demo.notionWithinFirst3Months}
               />
               <NotionMetricCard
                 value="40%"
-                label="Time Saved"
-                description="on documentation"
+                label={t.demo.notionTimeSaved}
+                description={t.demo.notionOnDocumentation}
               />
               <NotionMetricCard
                 value="100+"
-                label="Integrations"
-                description="with your tools"
+                label={t.demo.notionIntegrations}
+                description={t.demo.notionWithYourTools}
               />
               <NotionMetricCard
                 value="4.9/5"
-                label="User Rating"
-                description="from 10,000+ reviews"
+                label={t.demo.notionUserRating}
+                description={t.demo.notionFromReviews}
               />
             </div>
           </div>

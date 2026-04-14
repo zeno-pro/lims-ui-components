@@ -1,1 +1,1 @@
-"use strict";Object.defineProperty(exports, "__esModule", {value: true});var _chunkLGJSRKDNcjs = require('./chunk-LGJSRKDN.cjs');exports.I18nProvider = _chunkLGJSRKDNcjs.c; exports.en = _chunkLGJSRKDNcjs.b; exports.useI18n = _chunkLGJSRKDNcjs.d; exports.zh = _chunkLGJSRKDNcjs.a;
+"use strict";Object.defineProperty(exports, "__esModule", {value: true});var _chunkKVKDWS6Xcjs = require('./chunk-KVKDWS6X.cjs');exports.I18nProvider = _chunkKVKDWS6Xcjs.c; exports.en = _chunkKVKDWS6Xcjs.b; exports.useI18n = _chunkKVKDWS6Xcjs.d; exports.zh = _chunkKVKDWS6Xcjs.a;
