@@ -87,6 +87,19 @@ import {
   WizardLayout,
   type SidebarNavGroup,
 } from '@/components/layout'
+import {
+  NotionButton,
+  NotionCard,
+  NotionCardHeader,
+  NotionCardTitle,
+  NotionCardDescription,
+  NotionCardContent,
+  NotionInput,
+  NotionBadge,
+  NotionNavigation,
+  NotionFeatureCard,
+  NotionMetricCard,
+} from '@/components/notion'
 import { useI18n } from '@/i18n'
 import type { Equipment } from '@/types'
 import {
@@ -1178,6 +1191,150 @@ export function DemoPage() {
             </div>
           </CardContent>
         </Card>
+      </section>
+
+      <section className="space-y-4">
+        <h2 className="text-xl font-semibold">Notion Style Components</h2>
+        <div className="notion space-y-8">
+
+          {/* Navigation */}
+          <div>
+            <p className="text-sm text-muted-foreground mb-2">Navigation</p>
+            <NotionNavigation
+              logo={<div className="w-8 h-8 bg-[#0075de] rounded" />}
+              links={[
+                { label: 'Features', href: '#features' },
+                { label: 'Pricing', href: '#pricing' },
+                { label: 'About', href: '#about' },
+              ]}
+              ctaLabel="Get Notion free"
+              onCtaClick={() => console.log('CTA clicked')}
+            />
+          </div>
+
+          {/* Buttons */}
+          <div className="space-y-2">
+            <p className="text-sm text-muted-foreground">Buttons</p>
+            <div className="flex flex-wrap gap-4">
+              <NotionButton variant="primary">Primary</NotionButton>
+              <NotionButton variant="secondary">Secondary</NotionButton>
+              <NotionButton variant="ghost">Ghost</NotionButton>
+              <NotionButton variant="pill">Pill Badge</NotionButton>
+              <NotionButton variant="outline">Outline</NotionButton>
+            </div>
+            <div className="flex flex-wrap gap-4 mt-2">
+              <NotionButton variant="primary" size="sm">Small</NotionButton>
+              <NotionButton variant="primary" size="default">Default</NotionButton>
+              <NotionButton variant="primary" size="lg">Large</NotionButton>
+              <NotionButton variant="primary" isLoading>Loading</NotionButton>
+              <NotionButton variant="primary" disabled>Disabled</NotionButton>
+            </div>
+          </div>
+
+          {/* Badges */}
+          <div className="space-y-2">
+            <p className="text-sm text-muted-foreground">Badges</p>
+            <div className="flex flex-wrap gap-4">
+              <NotionBadge variant="default">Default</NotionBadge>
+              <NotionBadge variant="success">Success</NotionBadge>
+              <NotionBadge variant="warning">Warning</NotionBadge>
+              <NotionBadge variant="destructive">Destructive</NotionBadge>
+              <NotionBadge variant="outline">Outline</NotionBadge>
+            </div>
+          </div>
+
+          {/* Input */}
+          <div className="space-y-2">
+            <p className="text-sm text-muted-foreground">Input</p>
+            <div className="max-w-md">
+              <NotionInput placeholder="Enter your email..." />
+            </div>
+          </div>
+
+          {/* Cards */}
+          <div className="space-y-2">
+            <p className="text-sm text-muted-foreground">Cards</p>
+            <div className="grid gap-4 md:grid-cols-3">
+              <NotionCard>
+                <NotionCardHeader>
+                  <NotionCardTitle>Sample Card</NotionCardTitle>
+                  <NotionCardDescription>
+                    This is a Notion-style card with warm white background and whisper border.
+                  </NotionCardDescription>
+                </NotionCardHeader>
+                <NotionCardContent>
+                  <p className="text-sm text-[var(--notion-warm-gray-500)]">
+                    Card content goes here with proper typography.
+                  </p>
+                </NotionCardContent>
+              </NotionCard>
+              <NotionCard variant="warm">
+                <NotionCardHeader>
+                  <NotionCardTitle>Warm Card</NotionCardTitle>
+                  <NotionCardDescription>
+                    This card uses the warm white (#f6f5f4) background.
+                  </NotionCardDescription>
+                </NotionCardHeader>
+              </NotionCard>
+              <NotionCard interactive>
+                <NotionCardHeader>
+                  <NotionCardTitle>Interactive Card</NotionCardTitle>
+                  <NotionCardDescription>
+                    Hover to see the shadow and lift effect.
+                  </NotionCardDescription>
+                </NotionCardHeader>
+              </NotionCard>
+            </div>
+          </div>
+
+          {/* Feature Cards */}
+          <div className="space-y-2">
+            <p className="text-sm text-muted-foreground">Feature Cards</p>
+            <div className="grid gap-4 md:grid-cols-3">
+              <NotionFeatureCard
+                title="Wikis"
+                description="Centralize your knowledge. Every piece of information your team needs, organized and accessible."
+              />
+              <NotionFeatureCard
+                title="Projects"
+                description="Manage any type of work. From simple checklists to complex product launches."
+                variant="warm"
+              />
+              <NotionFeatureCard
+                title="Docs"
+                description="Write beautiful docs. Rich text, embeds, and real-time collaboration."
+              />
+            </div>
+          </div>
+
+          {/* Metric Cards */}
+          <div className="space-y-2">
+            <p className="text-sm text-muted-foreground">Metric Cards</p>
+            <div className="grid gap-4 md:grid-cols-4">
+              <NotionMetricCard
+                value="$4,200"
+                label="Average ROI"
+                description="within first 3 months"
+              />
+              <NotionMetricCard
+                value="40%"
+                label="Time Saved"
+                description="on documentation"
+              />
+              <NotionMetricCard
+                value="100+"
+                label="Integrations"
+                description="with your tools"
+              />
+              <NotionMetricCard
+                value="4.9/5"
+                label="User Rating"
+                description="from 10,000+ reviews"
+              />
+            </div>
+          </div>
+
+        </div>
       </section>
     </div>
   )

@@ -6,6 +6,7 @@ export default defineConfig({
   entry: {
     index: 'src/index.ts',
     ui: 'src/components/ui/index.ts',
+    notion: 'src/components/notion/index.ts',
     lims: 'src/components/lims/index.ts',
     layout: 'src/components/layout/index.ts',
     i18n: 'src/i18n/index.tsx',

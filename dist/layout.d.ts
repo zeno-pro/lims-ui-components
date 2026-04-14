@@ -4,6 +4,7 @@ import { LucideIcon } from 'lucide-react';
 interface AppShellProps extends React.HTMLAttributes<HTMLDivElement> {
     sidebar?: React.ReactNode;
     setupBanner?: React.ReactNode;
+    fullHeight?: boolean;
 }
 declare const AppShell: React.ForwardRefExoticComponent<AppShellProps & React.RefAttributes<HTMLDivElement>>;
 

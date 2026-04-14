@@ -1,0 +1,1 @@
+"use strict";Object.defineProperty(exports, "__esModule", {value: true});var _chunkZL4TA7BWcjs = require('./chunk-ZL4TA7BW.cjs');exports.I18nProvider = _chunkZL4TA7BWcjs.c; exports.en = _chunkZL4TA7BWcjs.b; exports.useI18n = _chunkZL4TA7BWcjs.d; exports.zh = _chunkZL4TA7BWcjs.a;

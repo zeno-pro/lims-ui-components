@@ -174,6 +174,48 @@
     --brand-subtle: #a0a4c9;
   }
 
+  /* Notion Design Tokens - scoped under .notion class */
+  .notion {
+    /* Notion Core Colors */
+    --notion-black: rgba(0, 0, 0, 0.95);
+    --notion-white: #ffffff;
+    --notion-blue: #0075de;
+    --notion-blue-hover: #005bab;
+    --notion-blue-active: #005499;
+
+    /* Warm Neutral Scale */
+    --notion-warm-white: #f6f5f4;
+    --notion-warm-dark: #31302e;
+    --notion-warm-gray-500: #615d59;
+    --notion-warm-gray-300: #a39e98;
+
+    /* Semantic Accents */
+    --notion-teal: #2a9d99;
+    --notion-green: #1aae39;
+    --notion-orange: #dd5b00;
+    --notion-pink: #ff64c8;
+    --notion-purple: #391c57;
+    --notion-brown: #523410;
+
+    /* Interactive */
+    --notion-link-blue: #0075de;
+    --notion-link-light-blue: #62a0f0;
+    --notion-focus-blue: #097fe8;
+    --notion-badge-blue-bg: #f2f9ff;
+    --notion-badge-blue-text: #097fe8;
+
+    /* Borders */
+    --notion-border: 1px solid rgba(0, 0, 0, 0.1);
+    --notion-border-solid: #e0e0e0;
+
+    /* Notion Shadows */
+    --notion-shadow-card: 0px 4px 18px rgba(0, 0, 0, 0.04), 0px 2.025px 7.84688px rgba(0, 0, 0, 0.027), 0px 0.8px 2.925px rgba(0, 0, 0, 0.02), 0px 0.175px 1.04062px rgba(0, 0, 0, 0.01);
+    --notion-shadow-deep: 0px 1px 3px rgba(0, 0, 0, 0.01), 0px 3px 7px rgba(0, 0, 0, 0.02), 0px 7px 15px rgba(0, 0, 0, 0.02), 0px 14px 28px rgba(0, 0, 0, 0.04), 0px 23px 52px rgba(0, 0, 0, 0.05);
+
+    /* Spacing */
+    --notion-space-unit: 8px;
+  }
+
   * {
     border-color: var(--border);
   }
@@ -286,6 +328,105 @@
   .text-code {
     font-family: var(--font-mono);
     font-size: 0.875em;
+  }
+
+  /* Notion Typography Scale */
+  .notion .notion-display-hero {
+    font-size: 4rem;
+    font-weight: 700;
+    line-height: 1.00;
+    letter-spacing: -2.125px;
+  }
+
+  .notion .notion-display-secondary {
+    font-size: 3.375rem;
+    font-weight: 700;
+    line-height: 1.04;
+    letter-spacing: -1.875px;
+  }
+
+  .notion .notion-section-heading {
+    font-size: 3rem;
+    font-weight: 700;
+    line-height: 1.00;
+    letter-spacing: -1.5px;
+  }
+
+  .notion .notion-subheading-large {
+    font-size: 2.5rem;
+    font-weight: 700;
+    line-height: 1.50;
+  }
+
+  .notion .notion-subheading {
+    font-size: 1.625rem;
+    font-weight: 700;
+    line-height: 1.23;
+    letter-spacing: -0.625px;
+  }
+
+  .notion .notion-card-title {
+    font-size: 1.375rem;
+    font-weight: 700;
+    line-height: 1.27;
+    letter-spacing: -0.25px;
+  }
+
+  .notion .notion-body-large {
+    font-size: 1.25rem;
+    font-weight: 600;
+    line-height: 1.40;
+    letter-spacing: -0.125px;
+  }
+
+  .notion .notion-body {
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.50;
+  }
+
+  .notion .notion-body-medium {
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.50;
+  }
+
+  .notion .notion-body-semibold {
+    font-size: 1rem;
+    font-weight: 600;
+    line-height: 1.50;
+  }
+
+  .notion .notion-nav-button {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.33;
+  }
+
+  .notion .notion-caption {
+    font-size: 0.875rem;
+    font-weight: 500;
+    line-height: 1.43;
+  }
+
+  .notion .notion-caption-light {
+    font-size: 0.875rem;
+    font-weight: 400;
+    line-height: 1.43;
+  }
+
+  .notion .notion-badge {
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.33;
+    letter-spacing: 0.125px;
+  }
+
+  .notion .notion-micro-label {
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1.33;
+    letter-spacing: 0.125px;
   }
 
   .surface-muted {

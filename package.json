@@ -18,6 +18,11 @@
       "import": "./dist/ui.js",
       "require": "./dist/ui.cjs"
     },
+    "./notion": {
+      "types": "./dist/notion.d.ts",
+      "import": "./dist/notion.js",
+      "require": "./dist/notion.cjs"
+    },
     "./lims": {
       "types": "./dist/lims.d.ts",
       "import": "./dist/lims.js",
