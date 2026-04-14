@@ -1,5 +1,6 @@
 export * from './components/ui'
 export * from './components/lims'
 export * from './components/layout'
+export * from './i18n'
 export * from './types'
 export * from './lib/utils'

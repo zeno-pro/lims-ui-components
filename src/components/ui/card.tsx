@@ -2,10 +2,10 @@ import * as React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 
-const cardVariants = cva('rounded-lg border bg-card text-card-foreground shadow-sm transition-all duration-150', {
+const cardVariants = cva('rounded-lg border bg-card text-card-foreground shadow-card transition-all duration-150', {
   variants: {
     interactive: {
-      true: 'cursor-pointer hover:shadow-md hover:-translate-y-0.5',
+      true: 'cursor-pointer hover:shadow-elevated hover:-translate-y-0.5',
     },
   },
 })

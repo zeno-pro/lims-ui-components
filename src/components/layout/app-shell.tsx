@@ -4,14 +4,15 @@ import { cn } from '@/lib/utils'
 export interface AppShellProps extends React.HTMLAttributes<HTMLDivElement> {
   sidebar?: React.ReactNode
   setupBanner?: React.ReactNode
+  fullHeight?: boolean
 }
 
 const AppShell = React.forwardRef<HTMLDivElement, AppShellProps>(
-  ({ className, sidebar, setupBanner, children, ...props }, ref) => {
+  ({ className, sidebar, setupBanner, fullHeight = true, children, ...props }, ref) => {
     return (
       <div
         ref={ref}
-        className={cn('flex h-screen overflow-hidden', className)}
+        className={cn('flex overflow-hidden', fullHeight ? 'h-screen' : 'h-full', className)}
         {...props}
       >
         {sidebar}

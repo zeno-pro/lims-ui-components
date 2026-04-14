@@ -28,6 +28,11 @@
       "import": "./dist/layout.js",
       "require": "./dist/layout.cjs"
     },
+    "./i18n": {
+      "types": "./dist/i18n.d.ts",
+      "import": "./dist/i18n.js",
+      "require": "./dist/i18n.cjs"
+    },
     "./styles": {
       "import": "./dist/styles.css",
       "require": "./dist/styles.css"

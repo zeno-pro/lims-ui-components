@@ -1,6 +1,7 @@
 import React from 'react'
 import { createRoot } from 'react-dom/client'
 import { DemoPage } from './DemoPage'
+import { I18nProvider } from '../i18n'
 import '../styles/globals.css'
 
 const container = document.getElementById('root')
@@ -8,7 +9,9 @@ if (container) {
   const root = createRoot(container)
   root.render(
     <React.StrictMode>
-      <DemoPage />
+      <I18nProvider>
+        <DemoPage />
+      </I18nProvider>
     </React.StrictMode>
   )
 }

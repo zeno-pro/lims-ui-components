@@ -58,6 +58,8 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   ScrollArea,
+  ThemeToggle,
+  LanguageToggle,
 } from '@/components/ui'
 import {
   StatusIndicator,
@@ -85,6 +87,7 @@ import {
   WizardLayout,
   type SidebarNavGroup,
 } from '@/components/layout'
+import { useI18n } from '@/i18n'
 import type { Equipment } from '@/types'
 import {
   FileText,
@@ -95,14 +98,20 @@ import {
   Settings,
   User,
   Trash2,
-  Book,
-  Search,
-  Mic,
-  Bot,
-  Shuffle,
-  Wrench,
   Plus,
   RefreshCw,
+  ClipboardList,
+  Activity,
+  Package,
+  FileCheck,
+  Truck,
+  Calendar,
+  Users,
+  ShieldCheck,
+  Gauge,
+  Scan,
+  BarChart3,
+  ClipboardCheck,
 } from 'lucide-react'
 
 const sampleEquipment: Equipment[] = [
@@ -120,38 +129,56 @@ const trackerEvents = [
 
 const sidebarNavigation: SidebarNavGroup[] = [
   {
-    title: 'Collect',
-    items: [{ name: 'Sources', href: '/sources', icon: FileText }],
-  },
-  {
-    title: 'Process',
+    title: 'Samples',
     items: [
-      { name: 'Notebooks', href: '/notebooks', icon: Book },
-      { name: 'Ask & Search', href: '/search', icon: Search },
+      { name: 'Sample Intake', href: '/samples/intake', icon: Truck },
+      { name: 'Sample List', href: '/samples', icon: Package },
+      { name: 'Sample Tracking', href: '/samples/tracking', icon: Activity },
     ],
   },
   {
-    title: 'Create',
-    items: [{ name: 'Podcasts', href: '/podcasts', icon: Mic }],
+    title: 'Testing',
+    items: [
+      { name: 'Test Requests', href: '/tests/requests', icon: ClipboardList },
+      { name: 'Test Results', href: '/tests/results', icon: FileCheck },
+      { name: 'Test Plans', href: '/tests/plans', icon: ClipboardCheck },
+    ],
   },
   {
-    title: 'Manage',
+    title: 'Equipment',
     items: [
-      { name: 'Models', href: '/settings/api-keys', icon: Bot },
-      { name: 'Transformations', href: '/transformations', icon: Shuffle },
+      { name: 'Equipment List', href: '/equipment', icon: Gauge },
+      { name: 'Calibration', href: '/equipment/calibration', icon: Scan },
+      { name: 'Maintenance', href: '/equipment/maintenance', icon: ShieldCheck },
+    ],
+  },
+  {
+    title: 'Reports',
+    items: [
+      { name: 'Test Reports', href: '/reports/tests', icon: FileText },
+      { name: 'Compliance', href: '/reports/compliance', icon: ShieldCheck },
+      { name: 'Statistics', href: '/reports/statistics', icon: BarChart3 },
+    ],
+  },
+  {
+    title: 'Administration',
+    items: [
+      { name: 'Calendar', href: '/calendar', icon: Calendar },
+      { name: 'Users', href: '/users', icon: Users },
       { name: 'Settings', href: '/settings', icon: Settings },
-      { name: 'Advanced', href: '/advanced', icon: Wrench },
     ],
   },
 ]
 
 const wizardSteps = [
-  { title: 'Select Type', description: 'Choose source type' },
-  { title: 'Configure', description: 'Set up processing' },
-  { title: 'Notebooks', description: 'Assign to notebooks' },
+  { title: 'Sample Info', description: 'Enter sample details' },
+  { title: 'Select Tests', description: 'Choose test parameters' },
+  { title: 'Assign Equipment', description: 'Select calibration equipment' },
+  { title: 'Review & Submit', description: 'Confirm test request' },
 ]
 
 export function DemoPage() {
+  const { t } = useI18n()
   const [dialogOpen, setDialogOpen] = React.useState(false)
   const [switchChecked, setSwitchChecked] = React.useState(false)
   const [radioValue, setRadioValue] = React.useState('opt1')
@@ -163,63 +190,70 @@ export function DemoPage() {
   const [wizardStep, setWizardStep] = React.useState(0)
   const [listSearch, setListSearch] = React.useState('')
 
+  const translatedWizardSteps = [
+    { title: t.demo.enterSampleDetails, description: t.demo.chooseTestParameters },
+    { title: t.demo.chooseTestParameters, description: t.demo.selectCalibrationEquipment },
+    { title: t.demo.selectCalibrationEquipment, description: t.demo.confirmTestRequest },
+    { title: t.demo.confirmTestRequest, description: t.demo.confirmAndSubmit },
+  ]
+
   return (
     <div className="container mx-auto py-8 space-y-12">
       <div className="space-y-2">
-        <h1 className="text-3xl font-bold">LIMS UI Components Demo</h1>
+        <h1 className="text-3xl font-bold">{t.demo.title}</h1>
         <p className="text-muted-foreground">
-          Component library for Electrical & EMC Testing Laboratories
+          {t.demo.subtitle}
         </p>
       </div>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Buttons</h2>
+        <h2 className="text-xl font-semibold">{t.demo.buttons}</h2>
         <div className="space-y-4">
           <div className="flex flex-wrap gap-4">
-            <Button>Default</Button>
-            <Button variant="success">Success</Button>
-            <Button variant="destructive">Destructive</Button>
-            <Button variant="outline">Outline</Button>
-            <Button variant="secondary">Secondary</Button>
-            <Button variant="ghost">Ghost</Button>
-            <Button variant="link">Link</Button>
+            <Button>{t.demo.default}</Button>
+            <Button variant="success">{t.demo.success}</Button>
+            <Button variant="destructive">{t.demo.destructive}</Button>
+            <Button variant="outline">{t.demo.outline}</Button>
+            <Button variant="secondary">{t.demo.secondary}</Button>
+            <Button variant="ghost">{t.demo.ghost}</Button>
+            <Button variant="link">{t.demo.link}</Button>
           </div>
           <div className="flex flex-wrap gap-4">
-            <Button size="sm">Small</Button>
-            <Button size="default">Default</Button>
-            <Button size="lg">Large</Button>
+            <Button size="sm">{t.demo.small}</Button>
+            <Button size="default">{t.demo.default}</Button>
+            <Button size="lg">{t.demo.large}</Button>
             <Button size="icon"><Bell className="size-4" /></Button>
           </div>
           <div className="flex flex-wrap gap-4">
-            <Button isLoading>Loading</Button>
-            <Button disabled>Disabled</Button>
-            <Button asChild><a href="#">Link as Child</a></Button>
+            <Button isLoading>{t.demo.loading}</Button>
+            <Button disabled>{t.demo.disabled}</Button>
+            <Button asChild><a href="#">{t.demo.link} as Child</a></Button>
           </div>
         </div>
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Badges</h2>
+        <h2 className="text-xl font-semibold">{t.demo.badges}</h2>
         <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-4">
-            <Badge variant="default">Default</Badge>
-            <Badge variant="success">Pass</Badge>
-            <Badge variant="destructive">Fail</Badge>
-            <Badge variant="warning">Warning</Badge>
-            <Badge variant="info">Pending</Badge>
-            <Badge variant="outline">Outline</Badge>
-            <Badge variant="secondary">Secondary</Badge>
+            <Badge variant="default">{t.demo.default}</Badge>
+            <Badge variant="success">{t.demo.pass}</Badge>
+            <Badge variant="destructive">{t.demo.fail}</Badge>
+            <Badge variant="warning">{t.common.warning}</Badge>
+            <Badge variant="info">{t.demo.pending}</Badge>
+            <Badge variant="outline">{t.demo.outline}</Badge>
+            <Badge variant="secondary">{t.demo.secondary}</Badge>
           </div>
           <div className="flex flex-wrap items-center gap-4">
-            <Badge size="sm">Small</Badge>
-            <Badge size="default">Default</Badge>
-            <Badge size="lg">Large</Badge>
+            <Badge size="sm">{t.demo.small}</Badge>
+            <Badge size="default">{t.demo.default}</Badge>
+            <Badge size="lg">{t.demo.large}</Badge>
           </div>
         </div>
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Status Indicators</h2>
+        <h2 className="text-xl font-semibold">{t.demo.statusIndicators}</h2>
         <div className="space-y-4">
           <div className="flex flex-wrap items-center gap-6">
             <StatusIndicator status="pass" showLabel />
@@ -240,7 +274,7 @@ export function DemoPage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Status Badges</h2>
+        <h2 className="text-xl font-semibold">{t.demo.statusBadges}</h2>
         <div className="space-y-4">
           <div className="flex flex-wrap gap-2">
             <StatusBadge status="pass" />
@@ -262,91 +296,91 @@ export function DemoPage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Alerts</h2>
+        <h2 className="text-xl font-semibold">{t.demo.alerts}</h2>
         <div className="grid gap-4 md:grid-cols-2">
           <Alert variant="default">
-            <AlertTitle>Information</AlertTitle>
-            <AlertDescription>This is a default alert for general information.</AlertDescription>
+            <AlertTitle>{t.demo.defaultAlert}</AlertTitle>
+            <AlertDescription>{t.demo.alertInfoDescription}</AlertDescription>
           </Alert>
           <Alert variant="success">
-            <AlertTitle>Success</AlertTitle>
-            <AlertDescription>The test completed successfully and all results are within limits.</AlertDescription>
+            <AlertTitle>{t.demo.successAlert}</AlertTitle>
+            <AlertDescription>{t.demo.alertSuccessDescription}</AlertDescription>
           </Alert>
           <Alert variant="destructive">
-            <AlertTitle>Error</AlertTitle>
-            <AlertDescription>Failed to complete the test. Please check the equipment calibration status.</AlertDescription>
+            <AlertTitle>{t.demo.errorAlert}</AlertTitle>
+            <AlertDescription>{t.demo.valueExceeds}</AlertDescription>
           </Alert>
           <Alert variant="warning">
-            <AlertTitle>Warning</AlertTitle>
-            <AlertDescription>Equipment calibration is due in 5 days.</AlertDescription>
+            <AlertTitle>{t.demo.warningAlert}</AlertTitle>
+            <AlertDescription>{t.demo.alertCalibrationDescription}</AlertDescription>
           </Alert>
         </div>
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Form Inputs</h2>
+        <h2 className="text-xl font-semibold">{t.demo.formInputs}</h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <div className="space-y-2">
-            <Label htmlFor="input">Text Input</Label>
-            <Input id="input" placeholder="Enter value" />
+            <Label htmlFor="input">{t.demo.textInput}</Label>
+            <Input id="input" placeholder={t.demo.enterValue} />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="input-error">Input with Error</Label>
-            <Input id="input-error" placeholder="Enter value" error />
+            <Label htmlFor="input-error">{t.demo.inputError}</Label>
+            <Input id="input-error" placeholder={t.demo.enterValue} error />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="input-disabled">Disabled Input</Label>
-            <Input id="input-disabled" placeholder="Disabled" disabled />
+            <Label htmlFor="input-disabled">{t.demo.disabledInput}</Label>
+            <Input id="input-disabled" placeholder={t.demo.disabledInput} disabled />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="textarea">Textarea</Label>
-            <Textarea id="textarea" placeholder="Enter description" />
+            <Label htmlFor="textarea">{t.demo.textarea}</Label>
+            <Textarea id="textarea" placeholder={t.demo.enterDescription} />
           </div>
           <div className="space-y-2">
-            <Label htmlFor="textarea-error">Textarea with Error</Label>
-            <Textarea id="textarea-error" placeholder="Enter description" error />
+            <Label htmlFor="textarea-error">{t.demo.textareaError}</Label>
+            <Textarea id="textarea-error" placeholder={t.demo.enterDescription} error />
           </div>
           <div className="space-y-2">
-            <Label>Checkbox</Label>
+            <Label>{t.demo.checkbox}</Label>
             <div className="flex items-center gap-2">
               <Checkbox id="checkbox" checked={checkboxChecked} onCheckedChange={(checked) => setCheckboxChecked(Boolean(checked))} />
-              <Label htmlFor="checkbox" className="font-normal">Accept terms and conditions</Label>
+              <Label htmlFor="checkbox" className="font-normal">{t.demo.acceptTerms}</Label>
             </div>
           </div>
           <div className="space-y-2">
-            <Label>Switch</Label>
+            <Label>{t.demo.switch}</Label>
             <div className="flex items-center gap-2">
               <Switch id="switch" checked={switchChecked} onCheckedChange={setSwitchChecked} />
-              <Label htmlFor="switch" className="font-normal">Enable notifications</Label>
+              <Label htmlFor="switch" className="font-normal">{t.demo.enableNotifications}</Label>
             </div>
           </div>
           <div className="space-y-2">
-            <Label>Radio Group</Label>
+            <Label>{t.demo.radioGroup}</Label>
             <RadioGroup value={radioValue} onValueChange={setRadioValue}>
               <div className="flex items-center gap-2">
                 <RadioGroupItem value="opt1" id="r1" />
-                <Label htmlFor="r1" className="font-normal">Option 1</Label>
+                <Label htmlFor="r1" className="font-normal">{t.demo.option1}</Label>
               </div>
               <div className="flex items-center gap-2">
                 <RadioGroupItem value="opt2" id="r2" />
-                <Label htmlFor="r2" className="font-normal">Option 2</Label>
+                <Label htmlFor="r2" className="font-normal">{t.demo.option2}</Label>
               </div>
               <div className="flex items-center gap-2">
                 <RadioGroupItem value="opt3" id="r3" />
-                <Label htmlFor="r3" className="font-normal">Option 3</Label>
+                <Label htmlFor="r3" className="font-normal">{t.demo.option3}</Label>
               </div>
             </RadioGroup>
           </div>
           <div className="space-y-2">
-            <Label htmlFor="select">Select</Label>
+            <Label htmlFor="select">{t.demo.select}</Label>
             <Select>
               <SelectTrigger id="select">
-                <SelectValue placeholder="Select option" />
+                <SelectValue placeholder={t.demo.selectOption} />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="opt1">Option 1</SelectItem>
-                <SelectItem value="opt2">Option 2</SelectItem>
-                <SelectItem value="opt3">Option 3</SelectItem>
+                <SelectItem value="opt1">{t.demo.option1}</SelectItem>
+                <SelectItem value="opt2">{t.demo.option2}</SelectItem>
+                <SelectItem value="opt3">{t.demo.option3}</SelectItem>
               </SelectContent>
             </Select>
           </div>
@@ -354,25 +388,25 @@ export function DemoPage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Measurement Input</h2>
+        <h2 className="text-xl font-semibold">{t.demo.measurementInput}</h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <MeasurementInput
-            label="Conducted Emission"
+            label={t.demo.conductedEmission}
             value={23.5}
             unit="dBμV"
             precision={2}
             onChange={() => {}}
           />
           <MeasurementInput
-            label="With Error"
+            label={t.demo.inputError}
             value={35.2}
             unit="dBμV"
             precision={2}
             onChange={() => {}}
-            error="Value exceeds maximum limit"
+            error={t.demo.valueExceeds}
           />
           <MeasurementInput
-            label="Disabled"
+            label={t.demo.disabledInput}
             value={null}
             unit="dBμV"
             onChange={() => {}}
@@ -382,18 +416,18 @@ export function DemoPage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Progress</h2>
+        <h2 className="text-xl font-semibold">{t.demo.progress}</h2>
         <div className="space-y-4">
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
-              <span>Progress</span>
+              <span>{t.demo.progress}</span>
               <span>45%</span>
             </div>
             <Progress value={45} />
           </div>
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
-              <span>Success</span>
+              <span>{t.demo.success}</span>
               <span>100%</span>
             </div>
             <Progress value={100} />
@@ -402,30 +436,30 @@ export function DemoPage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Tabs</h2>
+        <h2 className="text-xl font-semibold">{t.demo.tabs}</h2>
         <Tabs defaultValue="tab1">
           <TabsList>
-            <TabsTrigger value="tab1">Test Results</TabsTrigger>
-            <TabsTrigger value="tab2">Samples</TabsTrigger>
-            <TabsTrigger value="tab3">Reports</TabsTrigger>
+            <TabsTrigger value="tab1">{t.nav.testResults}</TabsTrigger>
+            <TabsTrigger value="tab2">{t.nav.samples}</TabsTrigger>
+            <TabsTrigger value="tab3">{t.nav.reports}</TabsTrigger>
           </TabsList>
           <TabsContent value="tab1">
-            <p className="text-sm text-muted-foreground py-4">Test results content goes here.</p>
+            <p className="text-sm text-muted-foreground py-4">{t.demo.tabsTestResultsContent}</p>
           </TabsContent>
           <TabsContent value="tab2">
-            <p className="text-sm text-muted-foreground py-4">Samples content goes here.</p>
+            <p className="text-sm text-muted-foreground py-4">{t.demo.tabsSamplesContent}</p>
           </TabsContent>
           <TabsContent value="tab3">
-            <p className="text-sm text-muted-foreground py-4">Reports content goes here.</p>
+            <p className="text-sm text-muted-foreground py-4">{t.demo.tabsReportsContent}</p>
           </TabsContent>
         </Tabs>
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Accordion</h2>
+        <h2 className="text-xl font-semibold">{t.demo.accordion}</h2>
         <Accordion type="single" collapsible>
           <AccordionItem value="item-1">
-            <AccordionTrigger>Conducted Emissions Test</AccordionTrigger>
+            <AccordionTrigger>{t.demo.conductedEmissionsTest}</AccordionTrigger>
             <AccordionContent>
               <p className="text-sm text-muted-foreground">
                 This test measures electromagnetic disturbances conducted along power lines...
@@ -433,7 +467,7 @@ export function DemoPage() {
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-2">
-            <AccordionTrigger>Radiated Emissions Test</AccordionTrigger>
+            <AccordionTrigger>{t.demo.radiatedEmissionsTest}</AccordionTrigger>
             <AccordionContent>
               <p className="text-sm text-muted-foreground">
                 This test measures electromagnetic emissions radiated through space...
@@ -441,7 +475,7 @@ export function DemoPage() {
             </AccordionContent>
           </AccordionItem>
           <AccordionItem value="item-3">
-            <AccordionTrigger>Electrostatic Discharge Test</AccordionTrigger>
+            <AccordionTrigger>{t.demo.esdTest}</AccordionTrigger>
             <AccordionContent>
               <p className="text-sm text-muted-foreground">
                 This test evaluates the immunity of devices to electrostatic discharge...
@@ -452,22 +486,22 @@ export function DemoPage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Dialog</h2>
-        <Button onClick={() => setDialogOpen(true)}>Open Dialog</Button>
+        <h2 className="text-xl font-semibold">{t.demo.dialog}</h2>
+        <Button onClick={() => setDialogOpen(true)}>{t.demo.confirmAction}</Button>
         <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
           <DialogContent>
             <DialogHeader>
-              <DialogTitle>Confirm Action</DialogTitle>
+              <DialogTitle>{t.demo.confirmAction}</DialogTitle>
               <DialogDescription>
-                Are you sure you want to proceed with this action? This cannot be undone.
+                {t.demo.confirmMessage}
               </DialogDescription>
             </DialogHeader>
             <DialogFooter>
               <Button variant="outline" onClick={() => setDialogOpen(false)}>
-                Cancel
+                {t.common.cancel}
               </Button>
               <Button variant="success" onClick={() => setDialogOpen(false)}>
-                Confirm
+                {t.common.confirm}
               </Button>
             </DialogFooter>
           </DialogContent>
@@ -475,17 +509,17 @@ export function DemoPage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Popover & Tooltip</h2>
+        <h2 className="text-xl font-semibold">{t.demo.popoverTooltip}</h2>
         <div className="flex flex-wrap gap-4">
           <Popover open={popoverOpen} onOpenChange={setPopoverOpen}>
             <PopoverTrigger asChild>
-              <Button variant="outline">Open Popover</Button>
+              <Button variant="outline">{t.demo.openPopover}</Button>
             </PopoverTrigger>
             <PopoverContent>
               <div className="space-y-2">
-                <h4 className="font-medium">Popover Title</h4>
+                <h4 className="font-medium">{t.demo.popoverTitle}</h4>
                 <p className="text-sm text-muted-foreground">
-                  This is a popover with additional information or actions.
+                  {t.demo.popoverContent}
                 </p>
               </div>
             </PopoverContent>
@@ -493,10 +527,10 @@ export function DemoPage() {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="outline">Hover for Tooltip</Button>
+                <Button variant="outline">{t.demo.hoverTooltip}</Button>
               </TooltipTrigger>
               <TooltipContent>
-                <p>This is a tooltip</p>
+                <p>{t.demo.tooltipText}</p>
               </TooltipContent>
             </Tooltip>
           </TooltipProvider>
@@ -504,32 +538,32 @@ export function DemoPage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Dropdown Menu</h2>
+        <h2 className="text-xl font-semibold">{t.demo.dropdownMenu}</h2>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline">Open Menu <ChevronDown className="ml-2 size-4" /></Button>
+            <Button variant="outline">{t.demo.openMenu} <ChevronDown className="ml-2 size-4" /></Button>
           </DropdownMenuTrigger>
           <DropdownMenuContent>
-            <DropdownMenuItem><User className="mr-2 size-4" /> Profile</DropdownMenuItem>
-            <DropdownMenuItem><Settings className="mr-2 size-4" /> Settings</DropdownMenuItem>
+            <DropdownMenuItem><User className="mr-2 size-4" /> {t.demo.profile}</DropdownMenuItem>
+            <DropdownMenuItem><Settings className="mr-2 size-4" /> {t.demo.settings}</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem><Download className="mr-2 size-4" /> Export</DropdownMenuItem>
+            <DropdownMenuItem><Download className="mr-2 size-4" /> {t.demo.export}</DropdownMenuItem>
             <DropdownMenuSeparator />
-            <DropdownMenuItem className="text-destructive"><Trash2 className="mr-2 size-4" /> Delete</DropdownMenuItem>
+            <DropdownMenuItem className="text-destructive"><Trash2 className="mr-2 size-4" /> {t.common.delete}</DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Table</h2>
+        <h2 className="text-xl font-semibold">{t.demo.table}</h2>
         <div className="border rounded-lg">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Sample ID</TableHead>
-                <TableHead>Product</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Result</TableHead>
+                <TableHead>{t.demo.sampleId}</TableHead>
+                <TableHead>{t.demo.product}</TableHead>
+                <TableHead>{t.demo.status}</TableHead>
+                <TableHead>{t.demo.result}</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -537,19 +571,19 @@ export function DemoPage() {
                 <TableCell className="font-mono">SAM-2024-001</TableCell>
                 <TableCell>Industrial Power Supply</TableCell>
                 <TableCell><StatusBadge status="pass" size="sm" /></TableCell>
-                <TableCell className="text-success">PASS</TableCell>
+                <TableCell className="text-success">{t.demo.pass}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-mono">SAM-2024-002</TableCell>
                 <TableCell>Medical Device Controller</TableCell>
                 <TableCell><StatusBadge status="pending" size="sm" /></TableCell>
-                <TableCell className="text-info">PENDING</TableCell>
+                <TableCell className="text-info">{t.demo.pending}</TableCell>
               </TableRow>
               <TableRow>
                 <TableCell className="font-mono">SAM-2024-003</TableCell>
                 <TableCell>Automotive ECU Module</TableCell>
                 <TableCell><StatusBadge status="fail" size="sm" /></TableCell>
-                <TableCell className="text-destructive">FAIL</TableCell>
+                <TableCell className="text-destructive">{t.demo.fail}</TableCell>
               </TableRow>
             </TableBody>
           </Table>
@@ -557,21 +591,21 @@ export function DemoPage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Separator</h2>
+        <h2 className="text-xl font-semibold">{t.demo.separator}</h2>
         <div className="space-y-4">
           <div className="flex items-center gap-4">
-            <span>Section 1</span>
+            <span>{t.demo.sampleCards}</span>
             <Separator orientation="vertical" className="h-6" />
-            <span>Section 2</span>
+            <span>{t.demo.testResultCards}</span>
             <Separator orientation="vertical" className="h-6" />
-            <span>Section 3</span>
+            <span>{t.demo.equipmentSelector}</span>
           </div>
           <Separator />
         </div>
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">ScrollArea</h2>
+        <h2 className="text-xl font-semibold">{t.demo.scrollArea}</h2>
         <ScrollArea className="h-[200px] w-full border rounded-lg p-4">
           <div className="space-y-4">
             <p className="text-sm">
@@ -591,12 +625,12 @@ export function DemoPage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Cards</h2>
+        <h2 className="text-xl font-semibold">{t.demo.cards}</h2>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           <Card>
             <CardHeader>
-              <CardTitle>Sample Card</CardTitle>
-              <CardDescription>With interactive hover state</CardDescription>
+              <CardTitle>{t.demo.sampleCards}</CardTitle>
+              <CardDescription>{t.demo.sampleCardsDescription}</CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
@@ -604,41 +638,41 @@ export function DemoPage() {
               </p>
             </CardContent>
             <CardFooter>
-              <Button size="sm">View Details</Button>
+              <Button size="sm">{t.page.viewAll}</Button>
             </CardFooter>
           </Card>
           <Card interactive>
             <CardHeader>
-              <CardTitle>Interactive Card</CardTitle>
-              <CardDescription>Click to interact</CardDescription>
+              <CardTitle>{t.demo.testResultCards}</CardTitle>
+              <CardDescription>{t.demo.clickToInteract}</CardDescription>
             </CardHeader>
             <CardContent>
               <p className="text-sm text-muted-foreground">
-                Hover to see the elevation change effect.
+                {t.demo.hoverElevationEffect}
               </p>
             </CardContent>
           </Card>
           <KPICard
-            title="Total Samples"
+            title={t.page.totalSamples}
             value={128}
             change={12}
-            changeLabel="vs last month"
+            changeLabel={t.demo.vsLastMonth}
             icon={<FileText className="size-6" />}
           />
           <KPICard
-            title="Pass Rate"
+            title={t.demo.passRate}
             value="94.2%"
             status="success"
             icon={<FileText className="size-6" />}
           />
           <KPICard
-            title="Calibrations Due"
+            title={t.demo.calibrationAlerts}
             value={3}
             status="warning"
             icon={<AlertCircle className="size-6" />}
           />
           <KPICard
-            title="Failed Tests"
+            title={t.demo.failedTests}
             value={2}
             status="destructive"
             icon={<AlertCircle className="size-6" />}
@@ -647,7 +681,7 @@ export function DemoPage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Spec Compliance</h2>
+        <h2 className="text-xl font-semibold">{t.demo.specCompliance}</h2>
         <div className="grid gap-4 md:grid-cols-2">
           <SpecCompliance
             parameter="Conducted Emission (150kHz-30MHz)"
@@ -682,7 +716,7 @@ export function DemoPage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Spec Range</h2>
+        <h2 className="text-xl font-semibold">{t.demo.specRange}</h2>
         <div className="flex flex-wrap gap-6">
           <SpecRange min={0} max={30} unit="dBμV" label="Limit Range" />
           <SpecRange min={3} max={10} unit="V/m" label="Acceptable Range" />
@@ -691,7 +725,7 @@ export function DemoPage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Sample Cards</h2>
+        <h2 className="text-xl font-semibold">{t.demo.sampleCards}</h2>
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           <SampleCard
             sampleId="SAM-2024-001"
@@ -721,7 +755,7 @@ export function DemoPage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Test Result Cards</h2>
+        <h2 className="text-xl font-semibold">{t.demo.testResultCards}</h2>
         <div className="grid gap-4 md:grid-cols-2">
           <TestResultCard
             testName="Conducted Emissions"
@@ -751,7 +785,7 @@ export function DemoPage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Sample Tracker</h2>
+        <h2 className="text-xl font-semibold">{t.demo.sampleTracker}</h2>
         <Card>
           <CardContent className="pt-6">
             <SampleTracker events={trackerEvents} />
@@ -760,22 +794,22 @@ export function DemoPage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Equipment Selector</h2>
+        <h2 className="text-xl font-semibold">{t.demo.equipmentSelector}</h2>
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <EquipmentSelector
-            label="Select Equipment"
+            label={t.demo.equipmentSelector}
             value="eq-1"
             onChange={() => {}}
             equipment={sampleEquipment}
           />
           <EquipmentSelector
-            label="With Calibration Due Warning"
+            label={t.demo.calibrationAlerts}
             value="eq-2"
             onChange={() => {}}
             equipment={sampleEquipment}
           />
           <EquipmentSelector
-            label="Disabled"
+            label={t.demo.disabledInput}
             value="eq-1"
             onChange={() => {}}
             equipment={sampleEquipment}
@@ -785,14 +819,14 @@ export function DemoPage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">States</h2>
+        <h2 className="text-xl font-semibold">{t.demo.states}</h2>
         <div className="grid gap-4 md:grid-cols-3">
           <EmptyState
             icon={<AlertCircle className="size-8" />}
-            title="No Samples Found"
-            description="There are no samples matching your criteria. Try adjusting your filters."
+            title={t.demo.sampleTracker}
+            description={t.demo.noSamplesMatchCriteria}
             action={{
-              label: 'Clear Filters',
+              label: t.page.refresh,
               onClick: () => console.log('Clear filters'),
             }}
           />
@@ -804,20 +838,22 @@ export function DemoPage() {
           </div>
         </div>
         <div className="border rounded-lg p-12">
-          <LoadingState variant="full" text="Loading samples..." />
+          <LoadingState variant="full" text={t.common.loading} />
         </div>
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Page Header</h2>
+        <h2 className="text-xl font-semibold">{t.demo.pageHeader}</h2>
         <Card>
           <PageHeader
-            title="Page Title"
-            description="This is a description for the page."
+            title={t.demo.laboratoryName}
+            description={t.page.laboratoryOverview}
             actions={
               <>
+                <LanguageToggle />
+                <ThemeToggle />
                 <Button variant="outline" size="icon"><RefreshCw className="size-4" /></Button>
-                <Button><Plus className="size-4 mr-1" /> Create New</Button>
+                <Button><Plus className="size-4 mr-1" /> {t.page.createNew}</Button>
               </>
             }
           />
@@ -825,7 +861,7 @@ export function DemoPage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Sidebar</h2>
+        <h2 className="text-xl font-semibold">{t.demo.sidebar}</h2>
         <Card>
           <CardContent className="p-0">
             <div className="flex h-[300px]">
@@ -835,9 +871,9 @@ export function DemoPage() {
                 activeHref="/notebooks"
               />
               <div className="flex-1 p-4 flex flex-col gap-4">
-                <p className="text-sm text-muted-foreground">Sidebar state: {sidebarCollapsed ? 'Collapsed' : 'Expanded'}</p>
+                <p className="text-sm text-muted-foreground">{t.demo.sidebarState}: {sidebarCollapsed ? t.demo.collapsed : t.demo.expanded}</p>
                 <Button variant="outline" size="sm" onClick={() => setSidebarCollapsed(!sidebarCollapsed)}>
-                  {sidebarCollapsed ? 'Expand' : 'Collapse'} Sidebar
+                  {sidebarCollapsed ? t.demo.expand : t.demo.collapse} {t.demo.sidebar}
                 </Button>
               </div>
             </div>
@@ -846,7 +882,7 @@ export function DemoPage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Collapsible Column</h2>
+        <h2 className="text-xl font-semibold">{t.demo.collapsibleColumn}</h2>
         <Card>
           <CardContent className="p-0">
             <div className="flex h-[200px]">
@@ -857,12 +893,12 @@ export function DemoPage() {
                 defaultWidth={200}
               >
                 <div className="p-4">
-                  <p className="text-sm font-medium">Left Panel</p>
-                  <p className="text-xs text-muted-foreground">Toggle visibility with button</p>
+                  <p className="text-sm font-medium">{t.demo.leftPanel}</p>
+                  <p className="text-xs text-muted-foreground">{t.demo.toggleVisibility}</p>
                 </div>
               </CollapsibleColumn>
               <div className="flex-1 p-4">
-                <p className="text-sm">Main Content Area</p>
+                <p className="text-sm">{t.demo.mainContentArea}</p>
               </div>
               <CollapsibleColumn
                 open={rightColumnOpen}
@@ -871,8 +907,8 @@ export function DemoPage() {
                 defaultWidth={200}
               >
                 <div className="p-4">
-                  <p className="text-sm font-medium">Right Panel</p>
-                  <p className="text-xs text-muted-foreground">Toggle visibility with button</p>
+                  <p className="text-sm font-medium">{t.demo.rightPanel}</p>
+                  <p className="text-xs text-muted-foreground">{t.demo.toggleVisibility}</p>
                 </div>
               </CollapsibleColumn>
             </div>
@@ -881,26 +917,31 @@ export function DemoPage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">AppShell</h2>
+        <h2 className="text-xl font-semibold">{t.demo.appShell}</h2>
         <Card>
           <CardContent className="p-0">
             <div className="flex h-[300px]">
               <AppShell
+                fullHeight={false}
                 sidebar={
                   <Sidebar
                     navigation={sidebarNavigation}
                     collapsed={sidebarCollapsed}
-                    activeHref="/notebooks"
+                    activeHref="/samples"
                   />
                 }
               >
                 <PageHeader
-                  title="Dashboard"
-                  description="Welcome to the dashboard"
-                  actions={<Button size="sm">Settings</Button>}
+                  title={t.page.dashboard}
+                  description={t.page.laboratoryOverview}
+                  actions={<Button size="sm">{t.page.viewAll}</Button>}
                 />
                 <div className="flex-1 overflow-auto p-4">
-                  <p className="text-sm text-muted-foreground">Main content area with sidebar layout.</p>
+                  <div className="grid gap-4 grid-cols-3">
+                    <KPICard title={t.page.totalSamples} value="156" change={12} changeLabel={t.demo.vsLastMonth} />
+                    <KPICard title={t.page.testsInProgress} value="23" change={5} changeLabel={t.demo.vsLastWeek} status="warning" />
+                    <KPICard title={t.page.pendingReports} value="8" change={-3} changeLabel={t.demo.vsLastWeek} status="success" />
+                  </div>
                 </div>
               </AppShell>
             </div>
@@ -909,35 +950,44 @@ export function DemoPage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">List Page Layout</h2>
+        <h2 className="text-xl font-semibold">{t.demo.listPageLayout}</h2>
         <Card>
           <CardContent className="p-0">
             <div className="h-[400px]">
               <ListPageLayout
-                title="Notebooks"
-                description="Manage your notebooks"
-                searchPlaceholder="Search notebooks..."
+                title={t.demo.sampleList}
+                description={t.demo.manageSamples}
+                searchPlaceholder={t.demo.searchSamples}
                 searchValue={listSearch}
                 onSearchChange={setListSearch}
                 isEmpty={false}
                 onCreate={() => console.log('Create clicked')}
                 onRefresh={() => console.log('Refresh clicked')}
               >
-                <Card className="w-[200px]">
-                  <CardHeader>
-                    <CardTitle>Notebook 1</CardTitle>
-                  </CardHeader>
-                </Card>
-                <Card className="w-[200px]">
-                  <CardHeader>
-                    <CardTitle>Notebook 2</CardTitle>
-                  </CardHeader>
-                </Card>
-                <Card className="w-[200px]">
-                  <CardHeader>
-                    <CardTitle>Notebook 3</CardTitle>
-                  </CardHeader>
-                </Card>
+                <SampleCard
+                  sampleId="SAM-2024-001"
+                  productName="Industrial Power Supply"
+                  customerName="Acme Corp"
+                  status="in-progress"
+                  testProgress={{ completed: 3, total: 8 }}
+                  receivedAt={new Date('2024-03-15')}
+                />
+                <SampleCard
+                  sampleId="SAM-2024-002"
+                  productName="Medical Device Controller"
+                  customerName="HealthTech Inc"
+                  status="completed"
+                  testProgress={{ completed: 8, total: 8 }}
+                  receivedAt={new Date('2024-03-10')}
+                />
+                <SampleCard
+                  sampleId="SAM-2024-003"
+                  productName="Automotive ECU Module"
+                  customerName="AutoParts Ltd"
+                  status="received"
+                  testProgress={{ completed: 0, total: 12 }}
+                  receivedAt={new Date('2024-03-18')}
+                />
               </ListPageLayout>
             </div>
           </CardContent>
@@ -945,22 +995,38 @@ export function DemoPage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Detail Page Layout</h2>
+        <h2 className="text-xl font-semibold">{t.demo.detailPageLayout}</h2>
         <Card>
           <CardContent className="p-0">
             <div className="h-[300px]">
               <DetailPageLayout
-                title="Notebook Details"
-                headerActions={<Button size="sm">Edit</Button>}
-                leftColumn={<div className="p-4"><p className="text-sm font-medium">Chat Panel</p></div>}
-                rightColumn={<div className="p-4"><p className="text-sm font-medium">Sources Panel</p></div>}
+                title={t.demo.sampleCards}
+                description="SAM-2024-001"
+                headerActions={<Button size="sm">{t.common.edit} Sample</Button>}
+                leftColumn={<div className="p-4"><p className="text-sm font-medium">{t.nav.testResults}</p><p className="text-xs text-muted-foreground mt-1">3 tests completed</p></div>}
+                rightColumn={<div className="p-4"><p className="text-sm font-medium">{t.nav.equipment}</p><p className="text-xs text-muted-foreground mt-1">Spectrum Analyzer</p></div>}
                 leftColumnOpen={leftColumnOpen}
                 onLeftColumnOpenChange={setLeftColumnOpen}
                 rightColumnOpen={rightColumnOpen}
                 onRightColumnOpenChange={setRightColumnOpen}
               >
                 <div className="p-4">
-                  <p className="text-sm">Main notebook content goes here.</p>
+                  <div className="space-y-4">
+                    <div className="grid grid-cols-2 gap-4">
+                      <div>
+                        <p className="text-xs text-muted-foreground">{t.demo.product}</p>
+                        <p className="text-sm font-medium">Industrial Power Supply</p>
+                      </div>
+                      <div>
+                        <p className="text-xs text-muted-foreground">Customer</p>
+                        <p className="text-sm font-medium">Acme Corp</p>
+                      </div>
+                    </div>
+                    <div>
+                      <p className="text-xs text-muted-foreground">Status</p>
+                      <StatusBadge status="pending" />
+                    </div>
+                  </div>
                 </div>
               </DetailPageLayout>
             </div>
@@ -969,29 +1035,33 @@ export function DemoPage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Settings Page Layout</h2>
+        <h2 className="text-xl font-semibold">{t.demo.settingsPageLayout}</h2>
         <Card>
           <CardContent className="p-0">
             <div className="h-[350px] overflow-auto">
               <SettingsPageLayout
-                title="Settings"
-                description="Configure your application settings"
+                title={t.demo.systemSettings}
+                description={t.demo.configureLaboratorySettings}
                 onSave={() => console.log('Save clicked')}
                 onCancel={() => console.log('Cancel clicked')}
               >
-                <FormSection title="API Configuration" description="Configure your API keys">
+                <FormSection title={t.demo.laboratoryInfo} description={t.demo.basicLaboratoryInfo}>
                   <div className="space-y-4">
                     <div className="space-y-2">
-                      <Label>API Key</Label>
-                      <Input type="password" placeholder="sk-..." />
+                      <Label>{t.demo.laboratoryName}</Label>
+                      <Input placeholder={t.demo.enterProductName} />
+                    </div>
+                    <div className="space-y-2">
+                      <Label>{t.demo.laboratoryId}</Label>
+                      <Input placeholder="LAB-001" />
                     </div>
                   </div>
                 </FormSection>
-                <FormSection title="Preferences">
+                <FormSection title={t.demo.calibrationAlerts}>
                   <div className="flex items-center justify-between">
                     <div>
-                      <Label>Enable Notifications</Label>
-                      <p className="text-sm text-muted-foreground">Receive updates about your tests</p>
+                      <Label>{t.demo.calibrationAlerts}</Label>
+                      <p className="text-sm text-muted-foreground">{t.demo.calibrationAlerts}</p>
                     </div>
                     <Switch checked={switchChecked} onCheckedChange={setSwitchChecked} />
                   </div>
@@ -1003,12 +1073,12 @@ export function DemoPage() {
       </section>
 
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Wizard Layout</h2>
+        <h2 className="text-xl font-semibold">{t.demo.wizardLayout}</h2>
         <Card>
           <CardContent className="p-0">
             <div className="h-[300px]">
               <WizardLayout
-                steps={wizardSteps}
+                steps={translatedWizardSteps}
                 currentStep={wizardStep}
                 onStepChange={setWizardStep}
                 onBack={() => setWizardStep(Math.max(0, wizardStep - 1))}
@@ -1017,30 +1087,90 @@ export function DemoPage() {
               >
                 <div className="space-y-4">
                   {wizardStep === 0 && (
-                    <div className="space-y-2">
-                      <Label>Select Source Type</Label>
-                      <Select>
-                        <SelectTrigger>
-                          <SelectValue placeholder="Choose a type" />
-                        </SelectTrigger>
-                        <SelectContent>
-                          <SelectItem value="web">Web Page</SelectItem>
-                          <SelectItem value="file">File</SelectItem>
-                          <SelectItem value="api">API</SelectItem>
-                        </SelectContent>
-                      </Select>
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label>{t.demo.sampleId}</Label>
+                        <Input placeholder={t.demo.sampleId} />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>{t.demo.product}</Label>
+                        <Input placeholder={t.demo.enterProductName} />
+                      </div>
+                      <div className="space-y-2">
+                        <Label>{t.demo.additionalNotes}</Label>
+                        <Textarea placeholder={t.demo.enterDescription} />
+                      </div>
                     </div>
                   )}
                   {wizardStep === 1 && (
-                    <div className="space-y-2">
-                      <Label>Configuration</Label>
-                      <Input placeholder="Enter configuration..." />
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label>{t.demo.testType}</Label>
+                        <Select>
+                          <SelectTrigger>
+                            <SelectValue placeholder={t.demo.selectOption} />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="emc">EMC Emission Test</SelectItem>
+                            <SelectItem value=" immunity">Immunity Test</SelectItem>
+                            <SelectItem value="safety">Safety Test</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-2">
+                        <Label>{t.demo.testType}</Label>
+                        <div className="flex items-center gap-2">
+                          <Checkbox id="param1" />
+                          <Label htmlFor="param1" className="font-normal">{t.demo.conductedEmissionsTest}</Label>
+                        </div>
+                        <div className="flex items-center gap-2">
+                          <Checkbox id="param2" />
+                          <Label htmlFor="param2" className="font-normal">{t.demo.radiatedEmissionsTest}</Label>
+                        </div>
+                      </div>
                     </div>
                   )}
                   {wizardStep === 2 && (
-                    <div className="space-y-2">
-                      <Label>Assign to Notebooks</Label>
-                      <Input placeholder="Notebook names..." />
+                    <div className="space-y-4">
+                      <div className="space-y-2">
+                        <Label>{t.demo.equipmentSelector}</Label>
+                        <Select>
+                          <SelectTrigger>
+                            <SelectValue placeholder={t.demo.selectOption} />
+                          </SelectTrigger>
+                          <SelectContent>
+                            <SelectItem value="eq1">Spectrum Analyzer RSA5065</SelectItem>
+                            <SelectItem value="eq2">Oscilloscope DSO-X3034A</SelectItem>
+                            <SelectItem value="eq3">Signal Generator SMW200A</SelectItem>
+                          </SelectContent>
+                        </Select>
+                      </div>
+                      <div className="space-y-2">
+                        <Label>{t.demo.calibrationDueDate}</Label>
+                        <Input type="date" />
+                      </div>
+                    </div>
+                  )}
+                  {wizardStep === 3 && (
+                    <div className="space-y-4">
+                      <Alert>
+                        <AlertTitle>{t.demo.reviewTestRequest}</AlertTitle>
+                        <AlertDescription>{t.demo.verifyInfoBeforeSubmit}</AlertDescription>
+                      </Alert>
+                      <div className="space-y-2">
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">{t.demo.sample}:</span>
+                          <span>DEMO-001</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">{t.demo.testType}:</span>
+                          <span>EMC Emission Test</span>
+                        </div>
+                        <div className="flex justify-between">
+                          <span className="text-muted-foreground">{t.demo.equipment}:</span>
+                          <span>Spectrum Analyzer</span>
+                        </div>
+                      </div>
                     </div>
                   )}
                 </div>
