@@ -8,6 +8,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { useI18n } from '@/i18n'
 import { MEASUREMENT_UNITS, type MeasurementUnit } from '@/types'
 
 export interface MeasurementInputProps {
@@ -16,6 +17,7 @@ export interface MeasurementInputProps {
   onChange: (value: number | null) => void
   unit: MeasurementUnit
   units?: MeasurementUnit[]
+  onUnitChange?: (unit: MeasurementUnit) => void
   min?: number
   max?: number
   step?: number
@@ -34,10 +36,11 @@ export function MeasurementInput({
   onChange,
   unit,
   units = MEASUREMENT_UNITS,
+  onUnitChange,
   min,
   max,
   step = 0.01,
-  precision: _precision = 2,
+  precision: _precision = 2, // TODO: Implement precision formatting for display
   error,
   helperText,
   disabled,
@@ -45,6 +48,7 @@ export function MeasurementInput({
   className,
   id,
 }: MeasurementInputProps) {
+  const { t } = useI18n()
   const uniqueId = React.useId()
   const resolvedId = id || `measurement-${uniqueId}`
 
@@ -60,7 +64,10 @@ export function MeasurementInput({
     }
   }
 
-  const handleUnitChange = (_newUnit: string) => {
+  const handleUnitChange = (newUnit: string) => {
+    if (onUnitChange) {
+      onUnitChange(newUnit as MeasurementUnit)
+    }
   }
 
   const isOutOfRange = value !== null && ((min !== undefined && value < min) || (max !== undefined && value > max))
@@ -120,7 +127,7 @@ export function MeasurementInput({
       )}
       {isOutOfRange && !error && (
         <p className="text-xs text-destructive">
-          Value must be between {min} and {max}
+          {t.lims.valueMustBeBetween.replace('{min}', String(min)).replace('{max}', String(max))}
         </p>
       )}
     </div>

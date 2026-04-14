@@ -115,6 +115,7 @@ interface MeasurementInputProps {
     onChange: (value: number | null) => void;
     unit: MeasurementUnit;
     units?: MeasurementUnit[];
+    onUnitChange?: (unit: MeasurementUnit) => void;
     min?: number;
     max?: number;
     step?: number;
@@ -126,7 +127,8 @@ interface MeasurementInputProps {
     className?: string;
     id?: string;
 }
-declare function MeasurementInput({ label, value, onChange, unit, units, min, max, step, precision: _precision, error, helperText, disabled, required, className, id, }: MeasurementInputProps): react_jsx_runtime.JSX.Element;
+declare function MeasurementInput({ label, value, onChange, unit, units, onUnitChange, min, max, step, precision: _precision, // TODO: Implement precision formatting for display
+error, helperText, disabled, required, className, id, }: MeasurementInputProps): react_jsx_runtime.JSX.Element;
 
 interface SpecRangeProps {
     min?: number;

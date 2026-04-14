@@ -17,6 +17,24 @@ declare const zh: {
         warning: string;
         info: string;
     };
+    status: {
+        pass: string;
+        fail: string;
+        pending: string;
+        warning: string;
+        calibrated: string;
+        'calibration-due': string;
+        maintenance: string;
+        retired: string;
+        'in-progress': string;
+        'not-applicable': string;
+    };
+    lims: {
+        valueMustBeBetween: string;
+        selectEquipment: string;
+        equipmentCalibrationDue: string;
+        by: string;
+    };
     nav: {
         samples: string;
         sampleIntake: string;
@@ -211,6 +229,24 @@ declare const en: {
         error: string;
         warning: string;
         info: string;
+    };
+    status: {
+        pass: string;
+        fail: string;
+        pending: string;
+        warning: string;
+        calibrated: string;
+        'calibration-due': string;
+        maintenance: string;
+        retired: string;
+        'in-progress': string;
+        'not-applicable': string;
+    };
+    lims: {
+        valueMustBeBetween: string;
+        selectEquipment: string;
+        equipmentCalibrationDue: string;
+        by: string;
     };
     nav: {
         samples: string;

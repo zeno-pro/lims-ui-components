@@ -1,5 +1,6 @@
 import * as React from 'react'
 import { cn } from '@/lib/utils'
+import { Label } from '@/components/ui'
 import {
   Select,
   SelectContent,
@@ -8,7 +9,8 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import { StatusIndicator } from './status-indicator'
-import type { Equipment, EquipmentStatus } from '@/types'
+import { useI18n } from '@/i18n'
+import type { Equipment } from '@/types'
 
 export interface EquipmentSelectorProps {
   label?: string
@@ -20,30 +22,24 @@ export interface EquipmentSelectorProps {
   className?: string
 }
 
-const statusLabels: Record<EquipmentStatus, string> = {
-  calibrated: 'Calibrated',
-  'calibration-due': 'Cal. Due',
-  maintenance: 'Maintenance',
-  retired: 'Retired',
-}
-
 export function EquipmentSelector({
   label,
   value,
   onChange,
   equipment,
   disabled,
-  placeholder = 'Select equipment',
+  placeholder,
   className,
 }: EquipmentSelectorProps) {
+  const { t } = useI18n()
   const selectedEquipment = equipment.find((e) => e.id === value)
 
   return (
     <div className={cn('flex flex-col gap-1.5', className)}>
-      {label && <label className="text-sm font-medium">{label}</label>}
+      {label && <Label>{label}</Label>}
       <Select value={value} onValueChange={onChange} disabled={disabled}>
         <SelectTrigger className={cn(!selectedEquipment && 'text-muted-foreground')}>
-          <SelectValue placeholder={placeholder} />
+          <SelectValue placeholder={placeholder ?? t.lims.selectEquipment} />
         </SelectTrigger>
         <SelectContent>
           {equipment.map((eq) => (
@@ -56,7 +52,7 @@ export function EquipmentSelector({
               <span className="flex items-center gap-2">
                 <StatusIndicator status={eq.status} size="sm" />
                 <span>{eq.name}</span>
-                <span className="text-xs text-muted-foreground">({statusLabels[eq.status]})</span>
+                <span className="text-xs text-muted-foreground">({t.status[eq.status]})</span>
               </span>
             </SelectItem>
           ))}
@@ -64,7 +60,7 @@ export function EquipmentSelector({
       </Select>
       {selectedEquipment?.status === 'calibration-due' && (
         <p className="text-xs text-warning">
-          Equipment calibration is due. Results may not be valid for compliance.
+          {t.lims.equipmentCalibrationDue}
         </p>
       )}
     </div>

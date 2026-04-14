@@ -2,6 +2,7 @@ import * as React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
 import { StatusIndicator } from './status-indicator'
+import { useI18n } from '@/i18n'
 
 type Status = 'pass' | 'fail' | 'pending' | 'warning' | 'calibrated' | 'calibration-due' | 'maintenance' | 'retired'
 
@@ -35,17 +36,6 @@ const statusBadgeVariants = cva(
   }
 )
 
-const statusLabels: Record<Status, string> = {
-  pass: 'Pass',
-  fail: 'Fail',
-  pending: 'Pending',
-  warning: 'Warning',
-  calibrated: 'Calibrated',
-  'calibration-due': 'Cal. Due',
-  maintenance: 'Maintenance',
-  retired: 'Retired',
-}
-
 export interface StatusBadgeProps
   extends React.HTMLAttributes<HTMLDivElement>,
     VariantProps<typeof statusBadgeVariants> {
@@ -61,6 +51,7 @@ export function StatusBadge({
   showIcon = true,
   ...props
 }: StatusBadgeProps) {
+  const { t } = useI18n()
   const resolvedVariant = variant ?? status
 
   return (
@@ -68,7 +59,7 @@ export function StatusBadge({
       {showIcon && (
         <StatusIndicator status={status} size="sm" />
       )}
-      <span>{statusLabels[status]}</span>
+      <span>{t.status[status]}</span>
     </div>
   )
 }

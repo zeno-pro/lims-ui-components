@@ -1,6 +1,7 @@
 import * as React from 'react'
 import { cva, type VariantProps } from 'class-variance-authority'
 import { cn } from '@/lib/utils'
+import { useI18n } from '@/i18n'
 
 type Status = 'pass' | 'fail' | 'pending' | 'warning' | 'calibrated' | 'calibration-due' | 'maintenance' | 'retired'
 
@@ -31,17 +32,6 @@ const statusVariants = cva('inline-flex shrink-0', {
   },
 })
 
-const statusLabels: Record<Status, string> = {
-  pass: 'Pass',
-  fail: 'Fail',
-  pending: 'Pending',
-  warning: 'Warning',
-  calibrated: 'Calibrated',
-  'calibration-due': 'Cal. Due',
-  maintenance: 'Maintenance',
-  retired: 'Retired',
-}
-
 export interface StatusIndicatorProps
   extends React.HTMLAttributes<HTMLSpanElement>,
     VariantProps<typeof statusVariants> {
@@ -57,7 +47,10 @@ export function StatusIndicator({
   showLabel,
   ...props
 }: StatusIndicatorProps) {
-  const shouldPulse = pulse ?? (status === 'pending' || status === 'calibration-due')
+  const { t } = useI18n()
+  // Auto-pulse for transient states
+  const isTransientStatus = status === 'pending' || status === 'calibration-due'
+  const shouldPulse = pulse ?? isTransientStatus
 
   return (
     <span className={cn('inline-flex items-center gap-1.5', className)} {...props}>
@@ -67,7 +60,7 @@ export function StatusIndicator({
         </svg>
       </span>
       {showLabel && (
-        <span className="text-sm font-medium text-foreground">{statusLabels[status]}</span>
+        <span className="text-sm font-medium text-foreground">{t.status[status]}</span>
       )}
     </span>
   )
